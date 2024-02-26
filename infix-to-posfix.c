@@ -4,19 +4,19 @@
 #include <ctype.h>
 
 int ch[100];
-char infix[50], posfix[50], stack[50];
+char infix[100], posfix[100], stack[100];
 int top = -1;
 char item;
 
 void push(char item)
 {
-    if (top >= 49)
+    if (top >= 99)
     {
-        printf("top is overflow");
+        printf("stack is overflow");
     }
     else
     {
-        ++top;
+        top++;
         stack[top] = item;
     }
 }
@@ -26,6 +26,7 @@ char pop()
     if (top == -1)
     {
         printf("stack overflow");
+        return -1;
     }
     else
     {
@@ -76,7 +77,7 @@ void in_to_po(char infix[], char posfix[])
     item = infix[i];
     while (item != '\0')
     {
-        if (item = '(')
+        if (item == '(')
         {
             push(item);
         }
@@ -109,14 +110,14 @@ void in_to_po(char infix[], char posfix[])
         }
         else
         {
-            printf("invelid expretion");
+            printf("invalid expression");
         }
         i++;
         item = infix[i];
     }
-    if (top > 0)
+    if (top != -1)
     {
-        printf("invelid expretion");
+        printf("invalid expression");
     }
     posfix[j] = '\0';
 }
@@ -126,6 +127,12 @@ int main()
     printf("enter an infix expretion : ");
     gets(infix);
     in_to_po(infix, posfix);
+    printf("Postfix expression is:");
     puts(posfix);
+    // printf("enter an infix expression : ");
+    // fgets(infix, sizeof(infix), stdin);
+    // infix[strcspn(infix, "\n")] = '\0'; // Remove the newline character from input
+    // in_to_po(infix, posfix);
+    // printf("Postfix expression: %s\n", posfix);
     return 0;
 }
